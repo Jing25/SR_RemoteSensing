@@ -1,0 +1,41 @@
+{
+  "name": "012_srgan_x3"
+  , "suffix": "_srgan"
+  , "model": "srgan"
+  , "scale": 3
+  , "gpu_ids": [0]
+
+  , "datasets": {
+    "test_1": { // the 1st test dataset
+      "name": "latest_sentinel"
+      //"name": "nouse"
+      , "mode": "LRHR"
+      , "dataroot_HR": "~/Jing/BasicSR/data/Sentinel_Landsat/test/HR"
+      , "dataroot_LR": "~/Jing/BasicSR/data/Sentinel_Landsat/test/x3"
+    }
+    , "test_2": { // the 2nd test dataset
+      "name": "set5"
+      , "mode": "LRHR"
+      , "dataroot_HR": "~/Jing/BasicSR/data/Set5"
+      , "dataroot_LR": null
+    }
+  }
+
+  , "path": {
+    "root": "/home/yuxin420/Jing/BasicSR/"
+    , "pretrain_model_G": "../experiments/012_srgan_x3/models/latest_G.pth"
+  }
+
+  , "network_G": {
+    "which_model_G": "sr_resnet" // RRDB_net | sr_resnet
+    , "norm_type": null
+    , "mode": "CNA"
+    , "nf": 64
+    , "nb": 16
+    , "in_nc": 3
+    , "out_nc": 3
+
+    , "gc": 32
+    , "group": 1
+  }
+}

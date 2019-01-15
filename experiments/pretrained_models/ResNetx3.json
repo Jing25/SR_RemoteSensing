@@ -1,0 +1,78 @@
+{
+  "name": "012_Resnet_x3",
+  "use_tb_logger": true,
+  "model": "sr",
+  "scale": 3,
+  "gpu_ids": [
+    0
+  ],
+  "datasets": {
+    "train": {
+      "name": "train_sentinel",
+      "mode": "LRHR",
+      "dataroot_HR": "/home/yuxin420/Jing/BasicSR/data/Sentinel_Landsat/train/HR",
+      "dataroot_LR": "/home/yuxin420/Jing/BasicSR/data/Sentinel_Landsat/train/x3",
+      "subset_file": null,
+      "use_shuffle": true,
+      "n_workers": 8,
+      "batch_size": 16,
+      "HR_size": 96,
+      "use_flip": true,
+      "use_rot": true,
+      "phase": "train",
+      "scale": 3,
+      "data_type": "img"
+    },
+    "val": {
+      "name": "val_sentinel",
+      "mode": "LRHR",
+      "dataroot_HR": "/home/yuxin420/Jing/BasicSR/data/Sentinel_Landsat/val/HR",
+      "dataroot_LR": "/home/yuxin420/Jing/BasicSR/data/Sentinel_Landsat/val/x3",
+      "phase": "val",
+      "scale": 3,
+      "data_type": "img"
+    }
+  },
+  "path": {
+    "root": "/home/yuxin420/Jing/BasicSR",
+    "pretrain_model_G": "../experiments/pretrained_models/SRResNet_x4_in3nf64nb16.pth",
+    "experiments_root": "/home/yuxin420/Jing/BasicSR/experiments/012_Resnet_x3",
+    "models": "/home/yuxin420/Jing/BasicSR/experiments/012_Resnet_x3/models",
+    "log": "/home/yuxin420/Jing/BasicSR/experiments/012_Resnet_x3",
+    "val_images": "/home/yuxin420/Jing/BasicSR/experiments/012_Resnet_x3/val_images"
+  },
+  "network_G": {
+    "which_model_G": "sr_resnet",
+    "norm_type": null,
+    "mode": "CNA",
+    "nf": 64,
+    "nb": 16,
+    "in_nc": 3,
+    "out_nc": 3,
+    "gc": 32,
+    "group": 1,
+    "scale": 3
+  },
+  "train": {
+    "lr_G": 0.0002,
+    "lr_scheme": "MultiStepLR",
+    "lr_steps": [
+      50000,
+      100000,
+      200000,
+      300000
+    ],
+    "lr_gamma": 0.5,
+    "pixel_criterion": "l1",
+    "pixel_weight": 1.0,
+    "val_freq": 8000.0,
+    "manual_seed": 0,
+    "niter": 400000.0
+  },
+  "logger": {
+    "print_freq": 200,
+    "save_checkpoint_freq": 8000.0
+  },
+  "timestamp": "190103-024935",
+  "is_train": true
+}

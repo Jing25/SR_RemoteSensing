@@ -1,0 +1,95 @@
+{
+  "name": "012_srgan_x3",
+  "use_tb_logger": true,
+  "model": "srgan",
+  "scale": 3,
+  "gpu_ids": [
+    0
+  ],
+  "datasets": {
+    "train": {
+      "name": "sentinel_landsat ",
+      "mode": "LRHR",
+      "dataroot_HR": "/home/yuxin420/Jing/BasicSR/data/Sentinel_Landsat/train/HR",
+      "dataroot_LR": "/home/yuxin420/Jing/BasicSR/data/Sentinel_Landsat/train/x3",
+      "subset_file": null,
+      "use_shuffle": true,
+      "n_workers": 8,
+      "batch_size": 16,
+      "HR_size": 96,
+      "use_flip": true,
+      "use_rot": true,
+      "phase": "train",
+      "scale": 3,
+      "data_type": "img"
+    },
+    "val": {
+      "name": "sentinel_val",
+      "mode": "LRHR",
+      "dataroot_HR": "/home/yuxin420/Jing/BasicSR/data/Sentinel_Landsat/val/HR",
+      "dataroot_LR": "/home/yuxin420/Jing/BasicSR/data/Sentinel_Landsat/val/x3",
+      "phase": "val",
+      "scale": 3,
+      "data_type": "img"
+    }
+  },
+  "path": {
+    "root": "/home/yuxin420/Jing/BasicSR",
+    "pretrain_model_G": "../experiments/012_Resnet_x3/models/296000_G.pth",
+    "experiments_root": "/home/yuxin420/Jing/BasicSR/experiments/012_srgan_x3",
+    "models": "/home/yuxin420/Jing/BasicSR/experiments/012_srgan_x3/models",
+    "log": "/home/yuxin420/Jing/BasicSR/experiments/012_srgan_x3",
+    "val_images": "/home/yuxin420/Jing/BasicSR/experiments/012_srgan_x3/val_images"
+  },
+  "network_G": {
+    "which_model_G": "sr_resnet",
+    "norm_type": null,
+    "mode": "CNA",
+    "nf": 64,
+    "nb": 16,
+    "in_nc": 3,
+    "out_nc": 3,
+    "gc": 32,
+    "group": 1,
+    "scale": 3
+  },
+  "network_D": {
+    "which_model_D": "discriminator_vgg_96",
+    "norm_type": "batch",
+    "act_type": "leakyrelu",
+    "mode": "CNA",
+    "nf": 64,
+    "in_nc": 3
+  },
+  "train": {
+    "lr_G": 0.0001,
+    "weight_decay_G": 0,
+    "beta1_G": 0.9,
+    "lr_D": 0.0001,
+    "weight_decay_D": 0,
+    "beta1_D": 0.9,
+    "lr_scheme": "MultiStepLR",
+    "lr_steps": [
+      20000,
+      80000,
+      100000,
+      300000
+    ],
+    "lr_gamma": 0.5,
+    "pixel_criterion": "l1",
+    "pixel_weight": 0.01,
+    "feature_criterion": "l1",
+    "feature_weight": 1,
+    "gan_type": "vanilla",
+    "gan_weight": 0.005,
+    "manual_seed": 0,
+    "niter": 200000.0,
+    "val_freq": 5000.0
+  },
+  "logger": {
+    "print_freq": 200,
+    "save_checkpoint_freq": 5000.0
+  },
+  "timestamp": "190104-164823",
+  "is_train": true
+}
