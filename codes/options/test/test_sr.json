@@ -1,28 +1,28 @@
 {
-  "name": "x3_012_SRResnet"
-  , "suffix": "_srresnet"
+  "name": "002_Resnet_RSOnly_x3"
+  , "suffix": "_srresnet_630k"
   , "model": "sr"
   , "scale": 3
   , "gpu_ids": [1]
 
   , "datasets": {
     "test_1": { // the 1st test dataset
-      "name": "sentinel"
+      "name": "sentinel_630k"
       , "mode": "LRHR"
-      , "dataroot_HR": "~/Jing/BasicSR/data/Sentinel_Landsat/test/HR"
-      , "dataroot_LR": "~/Jing/BasicSR/data/Sentinel_Landsat/test/x3/"
+      , "dataroot_HR":"~/Desktop/RS_SR/SR_RemoteSensing/data/sentinel/test/HR"
+      , "dataroot_LR":"~/Desktop/RS_SR/SR_RemoteSensing/data/sentinel/test/x3"
     }
     , "test_2": { // the 2nd test dataset
       "name": "set5"
       , "mode": "LRHR"
-      , "dataroot_HR": "~/Jing/BasicSR/data/Set5"
+      , "dataroot_HR": "~/Desktop/RS_SR/SR_RemoteSensing/data/Set5"
       , "dataroot_LR": null
     }
   }
 
   , "path": {
-    "root": "/home/yuxin420/Jing/BasicSR/"
-    , "pretrain_model_G": "../experiments/012_Resnet_x3/models/296000_G.pth"
+    "root": "/home/ehlab/Desktop/RS_SR/SR_RemoteSensing/"
+    , "pretrain_model_G": "../experiments/002_Resnet_RSOnly_x3/models/630000_G.pth"
     //, "pretrain_model_G": "../experiments/005_Resnet_x4_NAIP/models/latest_G.pth"
   }
 

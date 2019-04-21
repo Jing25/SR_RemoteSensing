@@ -1,5 +1,5 @@
 {
-  "name": "012_srgan_x3" //  please remove "debug_" during training
+  "name": "002_630k_srgan_x3" //  please remove "debug_" during training
   , "use_tb_logger": true
   , "model":"srgan"
   , "scale": 3
@@ -7,10 +7,10 @@
 
   , "datasets": {
     "train": {
-      "name": "sentinel_landsat "
+      "name": "sentinel_train"
       , "mode": "LRHR"
-      , "dataroot_HR": "~/Jing/BasicSR/data/Sentinel_Landsat/train/HR"
-      , "dataroot_LR": "~/Jing/BasicSR/data/Sentinel_Landsat/train/x3"
+      , "dataroot_HR": "~/Desktop/RS_SR/SR_RemoteSensing/data/sentinel/train/HR"
+      , "dataroot_LR": "~/Desktop/RS_SR/SR_RemoteSensing/data/sentinel/train/x3"
       , "subset_file": null
       , "use_shuffle": true
       , "n_workers": 8
@@ -22,14 +22,14 @@
     , "val": {
       "name": "sentinel_val"
       , "mode": "LRHR"
-      , "dataroot_HR": "~/Jing/BasicSR/data/Sentinel_Landsat/val/HR"
-      , "dataroot_LR": "~/Jing/BasicSR/data/Sentinel_Landsat/val/x3"
+      , "dataroot_HR": "~/Desktop/RS_SR/SR_RemoteSensing/data/sentinel/val/HR"
+      , "dataroot_LR": "~/Desktop/RS_SR/SR_RemoteSensing/data/sentinel/val/x3"
     }
   }
 
   , "path": {
-    "root": "/home/yuxin420/Jing/BasicSR"
-    , "pretrain_model_G": "../experiments/012_Resnet_x3/models/296000_G.pth"
+    "root": "/home/ehlab/Desktop/RS_SR/SR_RemoteSensing"
+    , "pretrain_model_G": "../experiments/002_Resnet_RSOnly_x3/models/630000_G.pth"
   }
 
   , "network_G": {
@@ -60,7 +60,7 @@
     , "weight_decay_D": 0
     , "beta1_D": 0.9
     , "lr_scheme": "MultiStepLR"
-    , "lr_steps": [20000, 80000, 100000, 300000]
+    , "lr_steps": [50000, 100000, 200000, 300000]
     , "lr_gamma": 0.5
 
     , "pixel_criterion": "l1"
@@ -76,7 +76,7 @@
     // , "gp_weigth": 10
 
     , "manual_seed": 0
-    , "niter": 2e5
+    , "niter": 5e5
     , "val_freq": 5e3
   }
 

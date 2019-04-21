@@ -25,25 +25,27 @@ class SRModel(BaseModel):
         else:
             # load pretrained models
             load_path_G = self.opt['path']['pretrain_model_G']
-            pretrained_dict = torch.load(load_path_G)
+            self.netG = networks.define_G(opt).to(self.device)
+            if load_path_G is not None:
+                pretrained_dict = torch.load(load_path_G)
             #pretrained_dict = model.keys()
         # 1. filter out unnecessary keys
-            pretrained_dict = {'module.' + k: v for k, v in pretrained_dict.items() if k.startswith('model.0.') or k.startswith('model.1.')}
-            model_d = pretrained_dict['module.model.1.sub.14.res.0.weight']
-            with open('out_x4_w0.txt', 'w') as f:
-                print('Filename:', model_d, file=f)
+                pretrained_dict = {'module.' + k: v for k, v in pretrained_dict.items() if k.startswith('model.0.') or k.startswith('model.1.')}
+                model_d = pretrained_dict['module.model.1.sub.14.res.0.weight']
+            #with open('out_x4_w0.txt', 'w') as f:
+            #    print('Filename:', model_d, file=f)
 
             # define network and load pretrained models
-            self.netG = networks.define_G(opt).to(self.device)
-            model_dict = self.netG.state_dict()          
+                #self.netG = networks.define_G(opt).to(self.device)
+                model_dict = self.netG.state_dict()          
 
         # 2. overwrite entries in the existing state dict
-            model_dict.update(pretrained_dict) 
-            w0 = model_dict['module.model.5.weight']
-            with open('out_x3_w0.txt', 'w') as f:
-                print('Filename:', w0, file=f) 
+                model_dict.update(pretrained_dict) 
+                w0 = model_dict['module.model.5.weight']
+            #with open('out_x3_w0.txt', 'w') as f:
+            #    print('Filename:', w0, file=f) 
         # 3. load the new state dict
-            self.netG.load_state_dict(model_dict)         
+                self.netG.load_state_dict(model_dict)         
 
         #pdb.set_trace()          
 
@@ -177,5 +179,5 @@ class SRModel(BaseModel):
         self.save_network(self.save_dir, self.netG, 'G', iter_label)
 
     def extract_parameters(self):
-        self.opt['scale'] = 4
+        self.opt['scale'] = 3
         

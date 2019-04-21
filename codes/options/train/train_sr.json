@@ -1,16 +1,16 @@
 {
-  "name": "012_Resnet_x3" //  please remove "debug_" during training
+  "name": "004_Resnet_RSOnly_x3" //  please remove "debug_" during training
   , "use_tb_logger": true
   , "model":"sr"
   , "scale": 3
-  , "gpu_ids": [0]
+  , "gpu_ids": [1]
 
   , "datasets": {
     "train": {
-      "name": "train_sentinel"
+      "name": "train_sentinelLandsat"
       , "mode": "LRHR"
-      , "dataroot_HR": "~/Jing/BasicSR/data/Sentinel_Landsat/train/HR"
-      , "dataroot_LR": "~/Jing/BasicSR/data/Sentinel_Landsat/train/x3"
+      , "dataroot_HR": "~/Desktop/RS_SR/SR_RemoteSensing/data/sentinel-landsat/splited/train/HR"
+      , "dataroot_LR": "~/Desktop/RS_SR/SR_RemoteSensing/data/sentinel-landsat/splited/train/x3"
       , "subset_file": null
       , "use_shuffle": true
       , "n_workers": 8
@@ -20,16 +20,16 @@
       , "use_rot": true
     }
     , "val": {
-      "name": "val_sentinel"
+      "name": "val_sentinelLandsat"
       , "mode": "LRHR"
-      , "dataroot_HR": "~/Jing/BasicSR/data/Sentinel_Landsat/val/HR"
-      , "dataroot_LR": "~/Jing/BasicSR/data/Sentinel_Landsat/val/x3"
+      , "dataroot_HR": "~/Desktop/RS_SR/SR_RemoteSensing/data/sentinel-landsat/splited/val/HR"
+      , "dataroot_LR": "~/Desktop/RS_SR/SR_RemoteSensing/data/sentinel-landsat/splited/val/x3"
     }
   }
 
   , "path": {
-    "root": "/home/yuxin420/Jing/BasicSR"
-    , "pretrain_model_G": "../experiments/pretrained_models/SRResNet_x4_in3nf64nb16.pth"
+    "root": "/home/ehlab/Desktop/RS_SR/SR_RemoteSensing"
+    , "pretrain_model_G": "../experiments/001_Resnet_x3/models/856000_G.pth"
   }
 
   , "network_G": {
@@ -45,21 +45,21 @@
   }
 
   , "train": {
-    "lr_G": 2e-4
+    "lr_G": 1e-4
     , "lr_scheme": "MultiStepLR"
-    , "lr_steps": [50000, 100000, 200000, 300000]
+    , "lr_steps": [50000, 100000, 200000, 300000] //[200000, 400000, 600000, 800000]
     , "lr_gamma": 0.5
 
     , "pixel_criterion": "l1"
     , "pixel_weight": 1.0
-    , "val_freq": 8e3
+    , "val_freq": 5e3
 
     , "manual_seed": 0
-    , "niter": 4e5
+    , "niter": 1e6
   }
 
   , "logger": {
     "print_freq": 200
-    , "save_checkpoint_freq": 8e3
+    , "save_checkpoint_freq": 5e3
   }
 }

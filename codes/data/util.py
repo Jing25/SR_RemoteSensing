@@ -80,7 +80,7 @@ def read_img(env, path):
     else:
         img = _read_lmdb_img(env, path)
    
-    img[img < 0] = 1
+    #img[img < 0] = 1
 
     if img.dtype == 'uint8': 
         img = img.astype(np.float32) / 255.

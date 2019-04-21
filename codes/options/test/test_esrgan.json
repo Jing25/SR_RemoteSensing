@@ -1,5 +1,5 @@
 {
-  "name": "012_srgan_x3"
+  "name": "002_630k_srgan_x3"
   , "suffix": "_srgan"
   , "model": "srgan"
   , "scale": 3
@@ -7,23 +7,23 @@
 
   , "datasets": {
     "test_1": { // the 1st test dataset
-      "name": "latest_sentinel"
+      "name": "sentinel"
       //"name": "nouse"
       , "mode": "LRHR"
-      , "dataroot_HR": "~/Jing/BasicSR/data/Sentinel_Landsat/test/HR"
-      , "dataroot_LR": "~/Jing/BasicSR/data/Sentinel_Landsat/test/x3"
+      , "dataroot_HR": "~/Desktop/RS_SR/SR_RemoteSensing/data/sentinel/test/HR"
+      , "dataroot_LR": "~/Desktop/RS_SR/SR_RemoteSensing/data/sentinel/test/x3"
     }
     , "test_2": { // the 2nd test dataset
       "name": "set5"
       , "mode": "LRHR"
-      , "dataroot_HR": "~/Jing/BasicSR/data/Set5"
+      , "dataroot_HR": "~/Desktop/RS_SR/SR_RemoteSensing/data/Set5"
       , "dataroot_LR": null
     }
   }
 
   , "path": {
-    "root": "/home/yuxin420/Jing/BasicSR/"
-    , "pretrain_model_G": "../experiments/012_srgan_x3/models/latest_G.pth"
+    "root": "/home/ehlab/Desktop/RS_SR/SR_RemoteSensing/"
+    , "pretrain_model_G": "../experiments/002_630k_srgan_x3/models/latest_G.pth"
   }
 
   , "network_G": {

@@ -6,7 +6,7 @@ from collections import OrderedDict
 
 import options.options as option
 import utils.util as util
-import utils.brisque as nr
+#import utils.brisque as nr
 from data.util import bgr2ycbcr
 from data import create_dataset, create_dataloader
 from models import create_model
@@ -60,6 +60,7 @@ for test_loader in test_loaders:
         model.feed_data(data, need_HR=need_HR)
         img_path = data['LR_path'][0]
         img_name = os.path.splitext(os.path.basename(img_path))[0]
+        img_ext = os.path.splitext(os.path.basename(img_path))[1]
 
         model.test()  # test
         visuals = model.get_current_visuals(need_HR=need_HR)
@@ -93,13 +94,13 @@ for test_loader in test_loaders:
                 #ssim_y = util.ssim(cropped_sr_img_y, cropped_gt_img_y, multichannel=False)
                 psnr_y = fr.psnr(cropped_sr_img_y, cropped_gt_img_y, MAX = 1.0)
                 ssim_y = fr.ssim(cropped_sr_img_y, cropped_gt_img_y, MAX = 1.0)[0]
-                brisque = nr.brisque(cropped_sr_img_y) 
+                #brisque = nr.brisque(cropped_sr_img_y) 
 
                 test_results['psnr_y'].append(psnr_y)
                 test_results['ssim_y'].append(psnr_y)
-                test_results['brisque'].append(brisque)
-                print('{:20s} - PSNR: {:.4f} dB; SSIM: {:.4f}; PSNR_Y: {:.4f} dB; SSIM_Y: {:.4f}; BRISQUE: {:.4f}.'\
-                    .format(img_name, psnr, ssim, psnr_y, ssim_y, brisque))
+                #test_results['brisque'].append(brisque)
+                print('{:20s} - PSNR: {:.4f} dB; SSIM: {:.4f}; PSNR_Y: {:.4f} dB; SSIM_Y: {:.4f}.'\
+                    .format(img_name, psnr, ssim, psnr_y, ssim_y))
             else:
                 print('{:20s} - PSNR: {:.4f} dB; SSIM: {:.4f}.'.format(img_name, psnr, ssim))
         else:
@@ -107,9 +108,9 @@ for test_loader in test_loaders:
 
         suffix = opt['suffix']
         if suffix:
-            save_img_path = os.path.join(dataset_dir, img_name + suffix + '.tif')
+            save_img_path = os.path.join(dataset_dir, img_name + suffix + "{}".format(img_ext))
         else:
-            save_img_path = os.path.join(dataset_dir, img_name + '.tif')
+            save_img_path = os.path.join(dataset_dir, img_name + "{}".format(img_ext))
 
         #pdb.set_trace()
         util.save_img(sr_img, save_img_path)
@@ -121,9 +122,9 @@ for test_loader in test_loaders:
         #ave_niqe = sum(test_results['niqe']) / len(test_results['niqe'])
         print('----Average PSNR/SSIM results for {}----\n\tPSNR: {:.4f} dB; SSIM: {:.4f}\n'\
                 .format(test_set_name, ave_psnr, ave_ssim))
-        if test_results['psnr_y'] and test_results['brisque']:
+        if test_results['psnr_y']:
             ave_psnr_y = sum(test_results['psnr_y']) / len(test_results['psnr_y'])
             ave_ssim_y = sum(test_results['ssim_y']) / len(test_results['ssim_y'])
-            ave_brisque = sum(test_results['brisque']) / len(test_results['brisque'])
-            print('----Y channel, average PSNR/SSIM----\n\tPSNR_Y: {:.4f} dB; SSIM_Y: {:.4f} BRISQUE: {:.4f}\n'\
-                .format(ave_psnr_y, ave_ssim_y, ave_brisque))
+            #ave_brisque = sum(test_results['brisque']) / len(test_results['brisque'])
+            print('----Y channel, average PSNR/SSIM----\n\tPSNR_Y: {:.4f} dB; SSIM_Y: {:.4f}\n'\
+                .format(ave_psnr_y, ave_ssim_y))

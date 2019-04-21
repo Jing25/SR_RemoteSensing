@@ -106,6 +106,7 @@ def main():
                 for val_data in val_loader:
                     idx += 1
                     img_name = os.path.splitext(os.path.basename(val_data['LR_path'][0]))[0]
+                    img_ext = os.path.splitext(os.path.basename(val_data['LR_path'][0]))[1]
                     img_dir = os.path.join(opt['path']['val_images'], img_name)
                     util.mkdir(img_dir)
 
@@ -117,8 +118,8 @@ def main():
                     gt_img = util.tensor2img(visuals['HR'])  # uint8
 
                     # Save SR images for reference
-                    save_img_path = os.path.join(img_dir, '{:s}_{:d}.tif'.format(\
-                        img_name, current_step))
+                    save_img_path = os.path.join(img_dir, '{:s}_{:d}{}'.format(\
+                        img_name, current_step, img_ext))
                     util.save_img(sr_img, save_img_path)
 
                     # calculate PSNR
